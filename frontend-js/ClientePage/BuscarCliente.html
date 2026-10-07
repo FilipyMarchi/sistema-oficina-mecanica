@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Cliente</title>
+    <script type ="text/javascript" src="cliente.js"></script>
+</head>
+<body>
+    <div style="max-width: 500px;">
+        <h2>Insira o id do cliente que deseja buscar</h2>
+        <label for="id">id</label>
+        <input id="id" type="text" value=""><br>
+
+        <div id="resultado"></div>
+
+        <button onclick="buscarCliente()">Buscar</button>
+        <button onclick="irParaAtualizar()">Atualizar</button>
+        <button onclick="deletarCliente()">Deletar</button>
+    </div>
+
+    <br><button onclick="window.location.href='MenuCliente.html'">&lt;&lt; Voltar</button>
+
+</body>
+</html>

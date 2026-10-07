@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Atualizar Cliente</title>
+    <script type ="text/javascript" src="cliente.js"></script>
+</head>
+
+<body onload="carregarClienteDaUrl()">
+    <div style="max-width: 500px;">
+
+        <h2>Insira o id do cliente que deseja atualizar</h2>
+        <label for="id">id</label>
+        <input id="id" type="text" value="">
+        <button onclick="carregarCliente()">Buscar</button><br><br>
+
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" value=""><br>
+        <label for="telefone">Telefone</label>
+        <input id="telefone" type="text" value=""><br>
+        <label for="cpf">CPF</label>
+        <input id="cpf" type="text" value=""><br>
+        <label for="endereco">Endereco</label>
+        <input id="endereco" type="text" value=""><br>
+        <label for="email">E-mail</label>
+        <input id="email" type="text" value=""><br>
+        <label for="senha">Senha</label>
+        <input id="senha" type="password" value=""><br>
+        <button onclick="atualizarCliente()">Atualizar</button>    
+    </div>
+
+    <br><button onclick="window.location.href='MenuCliente.html'">&lt;&lt; Voltar</button>
+    
+</body>
+</html>
