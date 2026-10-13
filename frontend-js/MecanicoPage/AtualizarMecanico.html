@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Mecânico</title>
+    <script type ="text/javascript" src="mecanico.js"></script>
+</head>
+<body onload="carregarMecanicoDaUrl()">
+    <div style="max-width: 500px;">
+
+        <h2>Insira o id do mecânico que deseja atualizar</h2>
+        <label for="id">id</label>
+        <input id="id" type="text" value="">
+        <button onclick="carregarMecanico()">Buscar</button><br><br>
+
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" value=""><br>
+        <label for="telefone">Telefone</label>
+        <input id="telefone" type="text" value=""><br>
+        <label for="cpf">CPF</label>
+        <input id="cpf" type="text" value=""><br>
+        <label for="endereco">Endereco</label>
+        <input id="endereco" type="text" value=""><br>
+        <label for="salario">salario</label>
+        <input id="salario" type="number" value=""><br>
+        <label for="especialidade">especialidade</label>
+        <input id="especialidade" type="text" value=""><br>
+        <button onclick="atualizarMecanico()">Atualizar</button>    
+    </div>
+    <br><button onclick="window.location.href='MenuMecanico.html'">&lt;&lt; Voltar</button>
+</body>
+</html>

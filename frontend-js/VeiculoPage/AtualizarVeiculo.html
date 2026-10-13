@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Atualizar Veículo</title>
+    <script type ="text/javascript" src="veiculo.js"></script>
+</head>
+
+<body onload="carregarVeiculoDaUrl()">
+    <div style="max-width: 500px;">
+
+        <h2>Insira o id do veiculo que deseja atualizar</h2>
+        <label for="id">id</label>
+        <input id="id" type="text" value="">
+        <button onclick="carregarVeiculo()">Buscar</button><br><br>
+
+        <label for="marca">Marca</label>
+        <input id="marca" type="text" value=""><br>
+        <label for="modelo">Modelo</label>
+        <input id="modelo" type="text" value=""><br>
+        <label for="ano">Ano</label>
+        <input id="ano" type="number" value=""><br>
+        <label for="cor">Cor</label>
+        <input id="cor" type="text" value=""><br>
+        <label for="placa">Placa</label>
+        <input id="placa" type="text" value=""><br>
+        <label for="clienteId">Cliente</label>
+        <input id="clienteId" type="number" value=""><br>
+        <label for="tipoVeiculo">Tipo</label>
+        <input id="tipoVeiculo" type="text" value=""><br>
+        <button onclick="atualizarVeiculo()">Atualizar</button>    
+    </div>
+
+    <br><button onclick="window.location.href='MenuVeiculo.html'">&lt;&lt; Voltar</button>
+    
+</body>
+</html>
