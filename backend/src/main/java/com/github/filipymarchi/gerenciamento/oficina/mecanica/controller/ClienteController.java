@@ -44,9 +44,9 @@ public class ClienteController {
         return HttpStatus.OK;
     }
 
-    @PutMapping("/{id}")
-    public ClienteModel update (@PathVariable Integer id, @RequestBody ClienteDto clienteDto){
-        return clienteService.update(id, clienteDto);
+    @PutMapping("/{cpf}")
+    public ClienteModel update (@PathVariable String cpf, @RequestBody ClienteDto clienteDto){
+        return clienteService.update(cpf, clienteDto);
     }
 
     @DeleteMapping("/id/{id}")

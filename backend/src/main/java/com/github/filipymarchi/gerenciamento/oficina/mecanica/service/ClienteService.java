@@ -60,10 +60,10 @@ public class ClienteService {
                 .build());
     }
 
-    public ClienteModel update (Integer id, ClienteDto clienteDto){
+    public ClienteModel update (String cpf, ClienteDto clienteDto){
         validar(clienteDto);
 
-        ClienteModel cliente = findById(id);
+        ClienteModel cliente = findByCpf(cpf);
 
         cliente.setNome(clienteDto.getNome());
         cliente.setTelefone(clienteDto.getTelefone());
