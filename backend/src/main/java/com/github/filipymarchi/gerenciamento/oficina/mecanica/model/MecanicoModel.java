@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,17 +23,17 @@ public class MecanicoModel {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 11)
     private String telefone;
 
     @Column(nullable = false, unique = true)
     private String cpf;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String endereco;
 
-    @Column(nullable = false)
-    private double salario;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal salario;
 
     @Column(nullable = false)
     private String especialidade;
