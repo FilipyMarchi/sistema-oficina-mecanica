@@ -34,7 +34,7 @@ public class VeiculoModel implements Serializable {
     @Column(nullable = false)
     private String cor;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 7)
     private String placa;
 
     @ManyToOne(fetch = FetchType.LAZY)
