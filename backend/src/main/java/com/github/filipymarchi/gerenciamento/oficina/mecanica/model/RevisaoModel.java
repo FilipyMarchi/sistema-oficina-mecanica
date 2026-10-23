@@ -23,17 +23,13 @@ public class RevisaoModel {
     @JoinColumn(name = "veiculo_id", nullable = false)
     private VeiculoModel veiculo;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mecanico_id", nullable = false)
+    private MecanicoModel mecanico;
+
     @Column(nullable = false)
     private int kmAtual;
 
     @Column(nullable = false)
     private int proxRevisaoKm;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mecanico_id", nullable = false)
-    private MecanicoModel mecanico;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "box_id", nullable = false)
-    private BoxAtendimentoModel box;
 }

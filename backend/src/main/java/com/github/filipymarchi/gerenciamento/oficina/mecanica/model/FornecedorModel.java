@@ -1,5 +1,6 @@
 package com.github.filipymarchi.gerenciamento.oficina.mecanica.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.filipymarchi.gerenciamento.oficina.mecanica.model.ENUM.TipoFornecedor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,9 +34,11 @@ public class FornecedorModel {
     @Column
     private TipoFornecedor tipo;
 
-    @OneToMany(mappedBy = "fornecedor")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "fornecedor", fetch = FetchType.LAZY)
     private List<FluidoModel> fluidos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "fornecedor")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "fornecedor", fetch = FetchType.LAZY)
     private List<PecaModel> pecas = new ArrayList<>();
 }

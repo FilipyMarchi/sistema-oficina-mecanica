@@ -27,10 +27,10 @@ public class ClienteModel implements Serializable {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 11)
     private String telefone;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false,unique = true, length = 11)
     private String cpf;
 
     @Column(nullable = false)
@@ -39,10 +39,11 @@ public class ClienteModel implements Serializable {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String senha;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private List<VeiculoModel> veiculos = new ArrayList<>();
 }
