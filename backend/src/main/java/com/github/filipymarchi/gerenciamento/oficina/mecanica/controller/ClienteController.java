@@ -5,6 +5,7 @@ import com.github.filipymarchi.gerenciamento.oficina.mecanica.model.ClienteModel
 import com.github.filipymarchi.gerenciamento.oficina.mecanica.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,15 @@ import java.util.List;
 public class ClienteController {
 
     private final ClienteService clienteService;
+
+    @PostMapping("/login")
+    public ResponseEntity<Void> login(@RequestBody ClienteModel request) {
+        boolean autenticado = clienteService.autenticar(request.getCpf(), request.getSenha());
+
+        return autenticado
+                ? ResponseEntity.ok().build()
+                : ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 
     @GetMapping
     public List<ClienteModel> findAll(){

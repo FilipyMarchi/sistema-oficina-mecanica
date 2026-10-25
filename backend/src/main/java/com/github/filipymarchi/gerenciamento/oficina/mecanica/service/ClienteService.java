@@ -14,6 +14,12 @@ import java.util.List;
 public class ClienteService {
     private final ClienteRepository clienteRepository;
 
+    public boolean autenticar(String cpf, String senha) {
+        return clienteRepository.findByCpf(cpf)
+                .map(cliente -> cliente.getSenha().equals(senha))
+                .orElse(false);
+    }
+
     public List<ClienteModel> findAll() {
         return clienteRepository.findAll();
     }
