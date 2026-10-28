@@ -65,11 +65,31 @@ public class VeiculoService {
                 .build());
     }
 
-    public VeiculoModel update(String placa, VeiculoDto veiculoDto) {
+    public VeiculoModel updateByPlaca(String placa, VeiculoDto veiculoDto) {
 
         validar(veiculoDto);
 
         VeiculoModel veiculo = findByPlaca(placa);
+
+        ClienteModel cliente = clienteRepository.findByCpf(veiculoDto.getClienteCpf())
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+
+        veiculo.setMarca(veiculoDto.getMarca());
+        veiculo.setModelo(veiculoDto.getModelo());
+        veiculo.setAno(veiculoDto.getAno());
+        veiculo.setCor(veiculoDto.getCor());
+        veiculo.setPlaca(veiculoDto.getPlaca());
+        veiculo.setCliente(cliente);
+        veiculo.setTipoVeiculo(veiculoDto.getTipoVeiculo());
+
+        return veiculoRepository.save(veiculo);
+    }
+
+    public VeiculoModel updateById(Integer id, VeiculoDto veiculoDto) {
+
+        validar(veiculoDto);
+
+        VeiculoModel veiculo = findById(id);
 
         ClienteModel cliente = clienteRepository.findByCpf(veiculoDto.getClienteCpf())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));

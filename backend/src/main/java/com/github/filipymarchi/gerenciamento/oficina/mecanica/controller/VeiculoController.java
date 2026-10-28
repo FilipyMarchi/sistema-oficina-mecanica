@@ -43,8 +43,13 @@ public class VeiculoController {
     }
 
     @PutMapping("/placa/{placa}")
-    public VeiculoModel update(@PathVariable String placa, @RequestBody VeiculoDto veiculoDto) {
-        return veiculoService.update(placa, veiculoDto);
+    public VeiculoModel updateByPlaca(@PathVariable String placa, @RequestBody VeiculoDto veiculoDto) {
+        return veiculoService.updateByPlaca(placa, veiculoDto);
+    }
+
+    @PutMapping("/id/{id}")
+    public VeiculoModel updateById(@PathVariable Integer id, @RequestBody VeiculoDto veiculoDto) {
+        return veiculoService.updateById(id, veiculoDto);
     }
 
     @DeleteMapping("/{id}")
