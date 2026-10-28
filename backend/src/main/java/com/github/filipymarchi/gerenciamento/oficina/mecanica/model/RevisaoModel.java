@@ -1,10 +1,13 @@
 package com.github.filipymarchi.gerenciamento.oficina.mecanica.model;
 
+import com.github.filipymarchi.gerenciamento.oficina.mecanica.model.ENUM.StatusRevisao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -23,13 +26,24 @@ public class RevisaoModel {
     @JoinColumn(name = "veiculo_id", nullable = false)
     private VeiculoModel veiculo;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mecanico_id", nullable = false)
     private MecanicoModel mecanico;
 
-    @Column(nullable = false)
-    private int kmAtual;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "orcamento_id", nullable = false)
+//    private OrcamentoModel orcamento;
 
     @Column(nullable = false)
-    private int proxRevisaoKm;
+    private Integer kmAtual;
+
+    @Column(nullable = false)
+    private Integer proxRevisaoKm;
+
+    @Column(nullable = false)
+    private LocalDate dataHora;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private StatusRevisao status;
 }
