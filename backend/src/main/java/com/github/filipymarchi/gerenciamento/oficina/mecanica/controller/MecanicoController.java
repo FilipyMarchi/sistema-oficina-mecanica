@@ -27,9 +27,9 @@ public class MecanicoController {
         return mecanicoService.findById(id);
     }
 
-    @GetMapping("cpf/{cpf}")
-    public MecanicoModel findByCpf (@PathVariable String cpf) {
-        return mecanicoService.findByCpf(cpf);
+    @GetMapping("nome/{nome}")
+    public MecanicoModel findByCpf (@PathVariable String nome) {
+        return mecanicoService.findByNome(nome);
     }
 
     @PostMapping
@@ -49,9 +49,9 @@ public class MecanicoController {
         return HttpStatus.OK;
     }
 
-    @DeleteMapping("/cpf/{cpf}")
-    public HttpStatus deleteByCpf (@PathVariable String cpf){
-        mecanicoService.deleteByCpf(cpf);
+    @DeleteMapping("/nome/{nome}")
+    public HttpStatus deleteByNome (@PathVariable String nome){
+        mecanicoService.deleteByNome(nome);
         return HttpStatus.OK;
     }
 }

@@ -25,8 +25,8 @@ public class MecanicoService {
         return mecanicoRepository.findById(id).orElse(null);
     }
 
-    public MecanicoModel findByCpf(String cpf) {
-        return mecanicoRepository.findByCpf(cpf).orElse(null);
+    public MecanicoModel findByNome(String nome) {
+        return mecanicoRepository.findByNome(nome).orElse(null);
     }
 
     public void save (MecanicoDto mecanicoDto){
@@ -42,10 +42,10 @@ public class MecanicoService {
                 .build());
     }
 
-    public MecanicoModel update (String cpf, MecanicoDto mecanicoDto){
+    public MecanicoModel update (String nome, MecanicoDto mecanicoDto){
         validar(mecanicoDto);
 
-        MecanicoModel mecanico = findByCpf(cpf);
+        MecanicoModel mecanico = findByNome(nome);
 
         mecanico.setNome(mecanicoDto.getNome());
         mecanico.setTelefone(mecanicoDto.getTelefone());
@@ -106,7 +106,7 @@ public class MecanicoService {
         mecanicoRepository.delete(findById(id));
     }
 
-    public void deleteByCpf (String cpf){
-        mecanicoRepository.delete(findByCpf(cpf));
+    public void deleteByNome (String nome){
+        mecanicoRepository.delete(findByNome(nome));
     }
 }

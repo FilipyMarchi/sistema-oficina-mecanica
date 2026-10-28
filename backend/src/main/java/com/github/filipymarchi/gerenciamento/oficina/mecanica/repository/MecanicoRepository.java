@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface MecanicoRepository extends JpaRepository<MecanicoModel, Integer> {
-    Optional<MecanicoModel> findByCpf(String cpf);
+    Optional<MecanicoModel> findByNome(String nome);
 }
