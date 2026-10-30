@@ -54,20 +54,19 @@ public class ClienteController {
         return HttpStatus.OK;
     }
 
-    @PutMapping("/{cpf}")
+    @PutMapping("/cpf/{cpf}")
     public ClienteModel update (@PathVariable String cpf, @RequestBody ClienteDto clienteDto){
         return clienteService.update(cpf, clienteDto);
     }
 
-    @DeleteMapping("/id/{id}")
-    public HttpStatus delete (@PathVariable Integer id){
-        clienteService.delete(id);
-        return HttpStatus.OK;
+    @PutMapping("/{id}")
+    public ClienteModel updateById (@PathVariable Integer id, @RequestBody ClienteDto clienteDto){
+        return clienteService.updateById(id, clienteDto);
     }
 
-    @DeleteMapping("/cpf/{cpf}")
-    public HttpStatus deleteByCpf (@PathVariable String cpf){
-        clienteService.deleteByCpf(cpf);
+    @DeleteMapping("/{id}")
+    public HttpStatus delete (@PathVariable Integer id){
+        clienteService.delete(id);
         return HttpStatus.OK;
     }
 }

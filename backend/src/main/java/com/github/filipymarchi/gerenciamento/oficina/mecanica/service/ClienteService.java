@@ -81,6 +81,21 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
+    public ClienteModel updateById (Integer id, ClienteDto clienteDto){
+        validar(clienteDto);
+
+        ClienteModel cliente = findById(id);
+
+        cliente.setNome(clienteDto.getNome());
+        cliente.setTelefone(clienteDto.getTelefone());
+        cliente.setCpf(clienteDto.getCpf());
+        cliente.setEndereco(clienteDto.getEndereco());
+        cliente.setEmail(clienteDto.getEmail());
+        cliente.setSenha(clienteDto.getSenha());
+
+        return clienteRepository.save(cliente);
+    }
+
     private void validar(ClienteDto dto) {
         if (dto.getNome() == null || dto.getNome().isBlank()) {
             throw new IllegalArgumentException("Digite um nome!");
