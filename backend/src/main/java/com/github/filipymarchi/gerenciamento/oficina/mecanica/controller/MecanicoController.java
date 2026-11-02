@@ -43,6 +43,11 @@ public class MecanicoController {
         return mecanicoService.update(cpf, mecanicoDto);
     }
 
+    @PutMapping("/id/{id}")
+    public MecanicoModel updateById (@PathVariable Integer id, @RequestBody MecanicoDto mecanicoDto){
+        return mecanicoService.updateById(id, mecanicoDto);
+    }
+
     @DeleteMapping("/{id}")
     public HttpStatus delete (@PathVariable Integer id){
         mecanicoService.delete(id);

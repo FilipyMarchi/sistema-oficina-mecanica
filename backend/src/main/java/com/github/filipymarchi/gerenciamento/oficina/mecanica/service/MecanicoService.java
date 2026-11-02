@@ -57,6 +57,21 @@ public class MecanicoService {
         return mecanicoRepository.save(mecanico);
     }
 
+        public MecanicoModel updateById (Integer id, MecanicoDto mecanicoDto){
+        validar(mecanicoDto);
+
+        MecanicoModel mecanico = findById (id);
+
+        mecanico.setNome(mecanicoDto.getNome());
+        mecanico.setTelefone(mecanicoDto.getTelefone());
+        mecanico.setCpf(mecanicoDto.getCpf());
+        mecanico.setEndereco(mecanicoDto.getEndereco());
+        mecanico.setSalario(mecanicoDto.getSalario());
+        mecanico.setEspecialidade(mecanicoDto.getEspecialidade());
+
+        return mecanicoRepository.save(mecanico);
+    }
+
     private void validar(MecanicoDto dto) {
         if (dto == null) {
             throw new IllegalArgumentException("Dados do mecânico não informados!");
