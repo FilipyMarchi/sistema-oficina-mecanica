@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lista Mecânico</title>
-    <script type ="text/javascript" src="mecanico.js"></script>
+    <link rel="stylesheet" href="estilo.css">
+    <script type="text/javascript" src="mecanico.js"></script>
 </head>
-<body onload="buscarMecanicos();">
-    <div id="divPrincipal"  style="overflow-x: auto;">
-    Carregando...
-  </div>
-   <br><button onclick="window.location.href='MenuMecanico.html'">&lt;&lt; Voltar</button>
+<body class="lista" onload="buscarMecanicos();">
+    <h2>Mecânicos cadastrados</h2>
+ 
+    <div id="divPrincipal">Carregando...</div>
+ 
+    <button class="btn-voltar" onclick="window.location.href='MenuMecanico.html'">&lt;&lt; Voltar</button>
 </body>
 </html>
