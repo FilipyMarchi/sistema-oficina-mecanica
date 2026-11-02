@@ -1,184 +1,293 @@
 const url = "http://localhost:8080/oficina/veiculo";
 
 const headers = {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-          };
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+};
+
+// Guarda o veículo carregado pela busca de placa (precisamos do id para atualizar/excluir)
+let veiculoAtual = null;
+
+/* ---------- Utilitários ---------- */
+
+function escapar(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+}
+
+async function lerErro(res, padrao) {
+    try {
+        const erro = await res.json();
+        return erro.erro || padrao;
+    } catch (e) {
+        return padrao; // corpo não era JSON
+    }
+}
+
+function lerCampos() {
+    return {
+        marca: document.getElementById("marca").value,
+        modelo: document.getElementById("modelo").value,
+        ano: document.getElementById("ano").value,
+        cor: document.getElementById("cor").value,
+        placa: document.getElementById("placa").value,
+        clienteCpf: document.getElementById("clienteCpf").value,
+        tipoVeiculo: document.getElementById("tipoVeiculo").value
+    };
+}
+
+function lerPlacaBusca() {
+    return document.getElementById("placaBusca").value.trim();
+}
+
+// O CPF do cliente pode vir direto no veículo ou dentro de um objeto "cliente"
+function cpfDoCliente(veiculo) {
+    return veiculo.clienteCpf ?? (veiculo.cliente && veiculo.cliente.cpf) ?? "";
+}
+
+// CARRO -> Carro
+function formatarTipo(tipo) {
+    if (!tipo) return tipo;
+    const t = String(tipo);
+    return t.charAt(0).toUpperCase() + t.slice(1).toLowerCase();
+}
+
+function iconeTipo(tipo) {
+    return { CARRO: "🚗", MOTO: "🏍️", CAMIONETE: "🛻" }[String(tipo).toUpperCase()] || "🚘";
+}
+
+// Busca um veículo na API pela placa (GET /placa/{placa})
+async function consultarPorPlaca(placa) {
+    const res = await fetch(url + "/placa/" + encodeURIComponent(placa), {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+    });
+    if (res.status === 404) throw new Error("Veículo não encontrado.");
+    if (!res.ok) throw new Error(await lerErro(res, "Servidor respondeu " + res.status));
+
+    const texto = await res.text();
+    if (!texto) throw new Error("Veículo não encontrado."); // servidor respondeu sem corpo
+    return JSON.parse(texto);
+}
+
+/* ---------- Cadastrar ---------- */
 
 function cadastrarVeiculo() {
-	var inst = {};
-	inst.marca = document.getElementById("marca").value;
-	inst.modelo = document.getElementById("modelo").value;
-	inst.ano = document.getElementById("ano").value;
-	inst.cor = document.getElementById("cor").value;
-    inst.placa = document.getElementById("placa").value;
-    inst.clienteId = document.getElementById("clienteId").value;
-    inst.tipoVeiculo = document.getElementById("tipoVeiculo").value;
+    const inst = lerCampos();
+
+    if (inst.tipoVeiculo === "") {
+        alert("Selecione o tipo de veículo.");
+        return;
+    }
 
     fetch(url, {
         headers: headers,
         method: "POST",
         body: JSON.stringify(inst)
     })
-    	.then(res => res.json())
-		.then(res => alert("Veículo cadastrado com sucesso!"))
-
-    .catch(err => alert("Erro:" + err.message))
+        .then(async res => {
+            if (!res.ok) throw new Error(await lerErro(res, "Erro ao cadastrar veículo!"));
+            alert("Veículo cadastrado com sucesso!");
+        })
+        .catch(err => alert("Erro: " + err.message));
 }
+
+/* ---------- Blocos de veículo ---------- */
+
+function campo(rotulo, valor) {
+    const texto = (valor === null || valor === undefined || valor === "") ? "-" : valor;
+    return '<div class="campo">' +
+               '<span class="campo-rotulo">' + rotulo + '</span>' +
+               '<span class="campo-valor">' + escapar(texto) + '</span>' +
+           '</div>';
+}
+
+function blocoVeiculo(v) {
+    const titulo = ((v.marca || "") + " " + (v.modelo || "")).trim();
+    return '<div class="bloco">' +
+               '<div class="bloco-topo">' +
+                   '<div class="avatar">' + iconeTipo(v.tipoVeiculo) + '</div>' +
+                   '<div class="bloco-titulo">' + escapar(titulo) + '</div>' +
+               '</div>' +
+               '<div class="campos">' +
+                   campo("Placa", v.placa) +
+                   campo("Tipo", formatarTipo(v.tipoVeiculo)) +
+                   campo("Ano", v.ano) +
+                   campo("Cor", v.cor) +
+                   campo("CPF do cliente", cpfDoCliente(v)) +
+               '</div>' +
+               '<div class="acoes">' +
+                   '<button data-placa="' + escapar(v.placa) + '" onclick="irParaAtualizar(this.dataset.placa)">Atualizar</button>' +
+                   '<button data-id="' + escapar(v.id) + '" onclick="deletarVeiculo(this.dataset.id)">Excluir</button>' +
+               '</div>' +
+           '</div>';
+}
+
+/* ---------- Listar ---------- */
 
 function buscarVeiculos() {
-	fetch(url, {
-		method: "GET",
-		headers: { "Accept": "application/json" }
-	})
-		.then(res => {
-			if (!res.ok) throw new Error("Servidor respondeu " + res.status);
-			return res.json();
-		})
-		.then(lista => exibirVeiculos(lista))
-		.catch(err => alert("Erro: " + err.message));
-}
-
-function buscarVeiculo() {
-	const id = document.getElementById("id").value.trim();
-
-	if (id == null) {
-		alert("ID não encontrado.");
-		return;
-	}
-
-	fetch(url + "/" + id, {
-		method: "GET",
-		headers: headers
-	})
-		.then(res => res.json())
-		.then(res => exibirVeiculo(res))
-		.catch(err => alert("Erro: " + err.message));
+    fetch(url, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+    })
+        .then(res => {
+            if (!res.ok) throw new Error("Servidor respondeu " + res.status);
+            return res.json();
+        })
+        .then(lista => exibirVeiculos(lista))
+        .catch(err => {
+            document.getElementById("divPrincipal").textContent = "Não foi possível carregar os veículos.";
+            alert("Erro: " + err.message);
+        });
 }
 
 function exibirVeiculos(instList) {
-	var tabela = "<table>"
-	   + "<tr><th>Marca</th><th>Modelo</th><th>Ano</th><th>Cor</th><th>Placa</th><th>Cliente</th><th>Tipo</th>"
-	   + "<th colSpan=3>Ações</th></tr>";
-	for (var i = 0; i < instList.length; i++) {
-		var inst = instList[i];
-		var linha = "<tr>" +
-			           "<td>"+ inst.marca + "</td>" +
-					   "<td>" + inst.modelo + "</td>" +
-					   "<td>" + inst.ano + "</td>" +
-                       "<td>" + inst.cor + "</td>" +
-                       "<td>" + inst.placa + "</td>" +
-                       "<td>" + inst.clienteId + "</td>" +
-                       "<td>" + inst.tipoVeiculo + "</td>" +
-                       '<td><button onclick="window.location.href=\'AtualizarVeiculo.html?id=' + inst.id + '\'">Atualizar</button></td>' +
-			           '<td><button onclick="deletarVeiculo(' + inst.id + ')">Excluir</button></td>' +
-					"</tr>";
+    const div = document.getElementById("divPrincipal");
 
-		tabela += linha;
-	}
-	tabela +="</table>";
-	document.getElementById("divPrincipal").innerHTML = tabela;
+    if (!instList || instList.length === 0) {
+        div.textContent = "Nenhum veículo cadastrado.";
+        return;
+    }
+
+    let html = '<div class="grade">';
+    for (let i = 0; i < instList.length; i++) {
+        html += blocoVeiculo(instList[i]);
+    }
+    html += '</div>';
+    div.innerHTML = html;
 }
 
-function carregarVeiculo() {
-	const id = document.getElementById("id").value.trim();
+/* ---------- Buscar (por placa) ---------- */
 
-	if (id === "") {
-		alert("Digite o id do veículo.");
-		return;
-	}
+function buscarVeiculo() {
+    const placa = lerPlacaBusca();
 
-	fetch(url + "/" + id, {
-		method: "GET",
-		headers: { "Accept": "application/json" }
-	})
-		.then(res => res.json())
-		.then(res => preencherCampos(res))
-		.catch(err => alert("Erro: " + err.message));
+    if (placa === "") {
+        alert("Digite a placa do veículo.");
+        return;
+    }
+
+    consultarPorPlaca(placa)
+        .then(veiculo => {
+            veiculoAtual = veiculo;
+            exibirVeiculo(veiculo);
+        })
+        .catch(err => {
+            veiculoAtual = null;
+            document.getElementById("resultado").innerHTML = "";
+            alert("Erro: " + err.message);
+        });
 }
 
 function exibirVeiculo(veiculo) {
-    document.getElementById("resultado").innerHTML =
-        "<p><b>Marca:</b> " + veiculo.marca + "</p>" +
-        "<p><b>Modelo:</b> " + veiculo.modelo + "</p>" +
-        "<p><b>Ano:</b> " + veiculo.ano + "</p>" +
-        "<p><b>Cor:</b> " + veiculo.cor + "</p>" +
-        "<p><b>Placa:</b> " + veiculo.placa + "</p>" +
-        "<p><b>Cliente:</b> " + veiculo.clienteId + "</p>" +
-        "<p><b>Tipo:</b> " + veiculo.tipoVeiculo + "</p>";
+    document.getElementById("resultado").innerHTML = blocoVeiculo(veiculo);
+}
+
+/* ---------- Atualizar (por placa) ---------- */
+
+function carregarVeiculo() {
+    const placa = lerPlacaBusca();
+
+    if (placa === "") {
+        alert("Digite a placa do veículo.");
+        return;
+    }
+
+    consultarPorPlaca(placa)
+        .then(veiculo => {
+            veiculoAtual = veiculo;
+            preencherCampos(veiculo);
+        })
+        .catch(err => {
+            veiculoAtual = null;
+            alert("Erro: " + err.message);
+        });
 }
 
 function preencherCampos(veiculo) {
-	document.getElementById("marca").value = veiculo.marca ?? "";
-	document.getElementById("modelo").value = veiculo.modelo ?? "";
-	document.getElementById("ano").value = veiculo.ano ?? "";
-	document.getElementById("cor").value = veiculo.cor ?? "";
-	document.getElementById("placa").value = veiculo.placa ?? "";
-	document.getElementById("clienteId").value = veiculo.clienteId ?? "";
+    document.getElementById("marca").value = veiculo.marca ?? "";
+    document.getElementById("modelo").value = veiculo.modelo ?? "";
+    document.getElementById("ano").value = veiculo.ano ?? "";
+    document.getElementById("cor").value = veiculo.cor ?? "";
+    document.getElementById("placa").value = veiculo.placa ?? "";
+    document.getElementById("clienteCpf").value = cpfDoCliente(veiculo);
     document.getElementById("tipoVeiculo").value = veiculo.tipoVeiculo ?? "";
 }
 
 function atualizarVeiculo() {
-    	const id = document.getElementById("id").value.trim();
+    if (veiculoAtual === null || veiculoAtual.id === undefined) {
+        alert("Busque o veículo pela placa antes de atualizar.");
+        return;
+    }
 
-	if (id == null) {
-		alert("ID não encontrado.");
-		return;
-	}
+    const inst = lerCampos();
 
-	var inst = {};
-	inst.marca = document.getElementById("marca").value;
-	inst.modelo = document.getElementById("modelo").value;
-	inst.ano = document.getElementById("ano").value;
-	inst.cor = document.getElementById("cor").value;
-    inst.placa = document.getElementById("placa").value;
-    inst.clienteId = document.getElementById("clienteId").value;
-    inst.tipoVeiculo = document.getElementById("tipoVeiculo").value;
+    if (inst.tipoVeiculo === "") {
+        alert("Selecione o tipo de veículo.");
+        return;
+    }
 
-    fetch(url + "/" + id, {
+    fetch(url + "/id/" + veiculoAtual.id, {
         headers: headers,
         method: "PUT",
         body: JSON.stringify(inst)
     })
-    .then(res => alert("Atualizado com sucesso"))
-    .then(res => exibirVeiculo(res))
-    .catch(err => alert("Erro:" + err.message))
+        .then(async res => {
+            if (!res.ok) throw new Error(await lerErro(res, "Erro ao atualizar veículo!"));
+            veiculoAtual = Object.assign({}, veiculoAtual, inst);
+            alert("Atualizado com sucesso");
+        })
+        .catch(err => alert("Erro: " + err.message));
 }
 
-function irParaAtualizar() {
-	const id = document.getElementById("id").value.trim();
+function irParaAtualizar(placa) {
+    const alvo = placa || (veiculoAtual && veiculoAtual.placa);
 
-	if (id === "") {
-		alert("Digite o id do veiculo e clique em Buscar primeiro.");
-		return;
-	}
+    if (!alvo) {
+        alert("Busque o veículo pela placa primeiro.");
+        return;
+    }
 
-	window.location.href = "AtualizarVeiculo.html?id=" + encodeURIComponent(id);
+    window.location.href = "AtualizarVeiculo.html?placa=" + encodeURIComponent(alvo);
 }
 
 function carregarVeiculoDaUrl() {
-	const id = new URLSearchParams(window.location.search).get("id");
+    const placa = new URLSearchParams(window.location.search).get("placa");
 
-	if (id === null) {
-		return; 
-	}
+    if (placa === null) {
+        return;
+    }
 
-	document.getElementById("id").value = id;
-	carregarVeiculo();
+    document.getElementById("placaBusca").value = placa;
+    carregarVeiculo();
 }
 
-function deletarVeiculo() {
-	const id = document.getElementById("id").value.trim();
+/* ---------- Excluir ---------- */
 
-	if (id == null) {
-		alert("ID não encontrado.");
-		return;
-	}
+function deletarVeiculo(id) {
+    if (id === undefined || id === null || id === "") {
+        alert("ID não encontrado.");
+        return;
+    }
 
-	fetch(url + "/" + id, {
-            headers: headers,
-            method: "DELETE"
+    if (!confirm("Deseja realmente excluir este veículo?")) {
+        return;
+    }
+
+    fetch(url + "/" + id, {
+        headers: headers,
+        method: "DELETE"
+    })
+        .then(async res => {
+            if (!res.ok) throw new Error(await lerErro(res, "Erro ao excluir veículo!"));
+            alert("Excluído com sucesso");
+            veiculoAtual = null;
+
+            if (document.getElementById("divPrincipal")) buscarVeiculos();
+
+            const resultado = document.getElementById("resultado");
+            if (resultado) resultado.innerHTML = "";
         })
-        .then(res => alert("Excluído com sucesso"))
-        .catch(err => alert("Erro:" + err.message))
+        .catch(err => alert("Erro: " + err.message));
 }

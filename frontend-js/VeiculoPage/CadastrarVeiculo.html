@@ -1,31 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cadastrar Veículo</title>
-    <script type ="text/javascript" src="veiculo.js"></script>
+    <link rel="stylesheet" href="estilo.css">
+    <script type="text/javascript" src="veiculo.js"></script>
 </head>
 <body>
     <h2>Cadastrar novo veículo</h2>
 
-    <div style="max-width: 500px;">
+    <div class="formulario">
         <label for="marca">Marca</label>
-        <input id="marca" type="text" value=""><br>
+        <input id="marca" type="text" value="">
         <label for="modelo">Modelo</label>
-        <input id="modelo" type="text" value=""><br>
+        <input id="modelo" type="text" value="">
         <label for="ano">Ano</label>
-        <input id="ano" type="number" value=""><br>
+        <input id="ano" type="number" value="">
         <label for="cor">Cor</label>
-        <input id="cor" type="text" value=""><br>
+        <input id="cor" type="text" value="">
         <label for="placa">Placa</label>
-        <input id="placa" type="text" value=""><br>
-        <label for="clienteId">Cliente</label>
-        <input id="clienteId" type="number" value=""><br>
+        <input id="placa" type="text" value="">
+        <label for="clienteCpf">CPF do cliente</label>
+        <input id="clienteCpf" type="text" value="">
         <label for="tipoVeiculo">Tipo de veículo</label>
-        <input id="tipoVeiculo" type="text" value=""><br>
-        <button onclick="cadastrarVeiculo()">Cadastrar</button>
+        <select id="tipoVeiculo">
+            <option value="">Selecione...</option>
+            <option value="CARRO">Carro</option>
+            <option value="MOTO">Moto</option>
+            <option value="CAMIONETE">Camionete</option>
+        </select>
+        <button class="btn-enviar" onclick="cadastrarVeiculo()">Cadastrar</button>
     </div>
 
-    <br><button onclick="window.location.href='MenuVeiculo.html'">&lt;&lt; Voltar</button>
+    <button class="btn-voltar" onclick="window.location.href='MenuVeiculo.html'">&lt;&lt; Voltar</button>
 </body>
 </html>

@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Buscar Veículo</title>
-    <script type ="text/javascript" src="veiculo.js"></script>
+    <link rel="stylesheet" href="estilo.css">
+    <script type="text/javascript" src="veiculo.js"></script>
 </head>
 <body>
-    <div style="max-width: 500px;">
-        <h2>Insira o id do Veículo que deseja buscar</h2>
-        <label for="id">id</label>
-        <input id="id" type="text" value=""><br>
-
-        <div id="resultado"></div>
-
-        <button onclick="buscarVeiculo()">Buscar</button>
-        <button onclick="irParaAtualizar()">Atualizar</button>
-        <button onclick="deletarVeiculo()">Deletar</button>
+    <h2>Buscar veículo pela placa</h2>
+ 
+    <div class="formulario">
+        <label for="placaBusca">Placa</label>
+        <div class="busca-linha">
+            <input id="placaBusca" type="text" value="" onkeydown="if (event.key === 'Enter') buscarVeiculo()">
+            <button onclick="buscarVeiculo()">Buscar</button>
+        </div>
     </div>
-
-    <br><button onclick="window.location.href='MenuVeiculo.html'">&lt;&lt; Voltar</button>
-
+ 
+    <div id="resultado"></div>
+ 
+    <button class="btn-voltar" onclick="window.location.href='MenuVeiculo.html'">&lt;&lt; Voltar</button>
 </body>
 </html>

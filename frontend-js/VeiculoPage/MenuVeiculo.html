@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Veículo Menu</title>
-    <script type ="text/javascript" src="veiculo.js"></script>
+    <link rel="stylesheet" href="estilo.css">
+    <script type="text/javascript" src="veiculo.js"></script>
 </head>
 <body>
-    <h2>MENU DE CLIENTES</h2><br>
+    <h2>Menu de veículos</h2>
 
-    <button onclick="window.location.href='ListaVeiculo.html'">Lista de Veículos</button><br>
-    <button onclick="window.location.href='CadastrarVeiculo.html'">Cadastrar Novo Veículo</button><br>
-    <button onclick="window.location.href='BuscarVeiculo.html'">Consultar Veículo</button><br>
-    <button onclick="window.location.href='AtualizarVeiculo.html'">Atualizar Veículo</button><br><br>
+    <div class="menu">
+        <button onclick="window.location.href='ListaVeiculo.html'">Lista de Veículos</button>
+        <button onclick="window.location.href='CadastrarVeiculo.html'">Cadastrar Novo Veículo</button>
+        <button onclick="window.location.href='BuscarVeiculo.html'">Consultar Veículo</button>
+        <button onclick="window.location.href='AtualizarVeiculo.html'">Atualizar Veículo</button>
+    </div>
 
-    <button onclick="window.location.href='../MenuPrincipal.html'">&lt;&lt; Voltar</button>
-
+    <button class="btn-voltar" onclick="window.location.href='../MenuPrincipal.html'">&lt;&lt; Voltar</button>
 </body>
 </html>

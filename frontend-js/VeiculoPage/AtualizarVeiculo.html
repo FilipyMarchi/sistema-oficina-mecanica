@@ -1,37 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Atualizar Veículo</title>
-    <script type ="text/javascript" src="veiculo.js"></script>
+    <link rel="stylesheet" href="estilo.css">
+    <script type="text/javascript" src="veiculo.js"></script>
 </head>
-
 <body onload="carregarVeiculoDaUrl()">
-    <div style="max-width: 500px;">
+    <h2>Atualizar veículo</h2>
 
-        <h2>Insira o id do veiculo que deseja atualizar</h2>
-        <label for="id">id</label>
-        <input id="id" type="text" value="">
-        <button onclick="carregarVeiculo()">Buscar</button><br><br>
+    <div class="formulario">
+        <label for="placaBusca">Digite a placa do veículo que deseja atualizar</label>
+        <div class="busca-linha">
+            <input id="placaBusca" type="text" value="" onkeydown="if (event.key === 'Enter') carregarVeiculo()">
+            <button onclick="carregarVeiculo()">Buscar</button>
+        </div>
+
+        <div class="separador"></div>
 
         <label for="marca">Marca</label>
-        <input id="marca" type="text" value=""><br>
+        <input id="marca" type="text" value="">
         <label for="modelo">Modelo</label>
-        <input id="modelo" type="text" value=""><br>
+        <input id="modelo" type="text" value="">
         <label for="ano">Ano</label>
-        <input id="ano" type="number" value=""><br>
+        <input id="ano" type="number" value="">
         <label for="cor">Cor</label>
-        <input id="cor" type="text" value=""><br>
+        <input id="cor" type="text" value="">
         <label for="placa">Placa</label>
-        <input id="placa" type="text" value=""><br>
-        <label for="clienteId">Cliente</label>
-        <input id="clienteId" type="number" value=""><br>
-        <label for="tipoVeiculo">Tipo</label>
-        <input id="tipoVeiculo" type="text" value=""><br>
-        <button onclick="atualizarVeiculo()">Atualizar</button>    
+        <input id="placa" type="text" value="">
+        <label for="clienteCpf">CPF do cliente</label>
+        <input id="clienteCpf" type="text" value="">
+        <label for="tipoVeiculo">Tipo de veículo</label>
+        <select id="tipoVeiculo">
+            <option value="">Selecione...</option>
+            <option value="CARRO">Carro</option>
+            <option value="MOTO">Moto</option>
+            <option value="CAMIONETE">Camionete</option>
+        </select>
+        <button class="btn-enviar" onclick="atualizarVeiculo()">Atualizar</button>
     </div>
 
-    <br><button onclick="window.location.href='MenuVeiculo.html'">&lt;&lt; Voltar</button>
-    
+    <button class="btn-voltar" onclick="window.location.href='MenuVeiculo.html'">&lt;&lt; Voltar</button>
 </body>
 </html>
