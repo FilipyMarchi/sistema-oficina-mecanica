@@ -26,6 +26,11 @@ public class RevisaoController {
         return revisaoService.findById(id);
     }
 
+    @GetMapping("placa/{veiculoPlaca}")
+    public RevisaoModel findByVeiiculoPlaca (@PathVariable String veiculoPlaca) {
+        return revisaoService.findByVeiculoPlaca(veiculoPlaca);
+    }
+
     @PostMapping
     public HttpStatus save (@RequestBody RevisaoDto revisaoDto){
         revisaoService.save(revisaoDto);
