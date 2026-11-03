@@ -29,6 +29,10 @@ public class RevisaoService {
         return revisaoRepository.findById(id).orElse(null);
     }
 
+    public RevisaoModel findByVeiculoPlaca (String veiculoPlaca) {
+        return revisaoRepository.findByVeiculoPlaca(veiculoPlaca).orElse(null);
+    }
+
     public void save (RevisaoDto revisaoDto){
         validar(revisaoDto);
 

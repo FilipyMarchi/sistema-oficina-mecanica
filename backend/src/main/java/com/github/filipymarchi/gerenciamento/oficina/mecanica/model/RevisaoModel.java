@@ -30,10 +30,6 @@ public class RevisaoModel {
     @JoinColumn(name = "mecanico_id", nullable = false)
     private MecanicoModel mecanico;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "orcamento_id", nullable = false)
-//    private OrcamentoModel orcamento;
-
     @Column(nullable = false)
     private Integer kmAtual;
 
