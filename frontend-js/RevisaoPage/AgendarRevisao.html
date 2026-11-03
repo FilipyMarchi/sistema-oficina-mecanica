@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Agendar Revisão</title>
+    <link rel="stylesheet" href="estilo.css">
+    <script type="text/javascript" src="revisao.js"></script>
+</head>
+<body onload="preencherStatus()">
+    <h2>Agendar nova revisão</h2>
+
+    <div class="formulario">
+        <label for="veiculoPlaca">Placa do veículo</label>
+        <input id="veiculoPlaca" type="text" value="">
+        <label for="mecanicoNome">Nome do mecânico</label>
+        <input id="mecanicoNome" type="text" value="">
+        <label for="kmAtual">KM atual</label>
+        <input id="kmAtual" type="number" value="">
+        <label for="proxRevisaoKm">KM da próxima revisão</label>
+        <input id="proxRevisaoKm" type="number" value="">
+        <label for="dataHora">Data</label>
+        <input id="dataHora" type="date" value="">
+        <label for="status">Status</label>
+        <select id="status"></select>
+        <button class="btn-enviar" onclick="agendarRevisao()">Agendar</button>
+    </div>
+
+    <button class="btn-voltar" onclick="window.location.href='MenuRevisao.html'">&lt;&lt; Voltar</button>
+</body>
+</html>

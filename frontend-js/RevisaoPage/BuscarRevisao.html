@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Buscar Revisão</title>
+    <link rel="stylesheet" href="estilo.css">
+    <script type="text/javascript" src="revisao.js"></script>
+</head>
+<body>
+    <h2>Buscar revisão pela placa</h2>
+
+    <div class="formulario">
+        <label for="placaBusca">Placa do veículo</label>
+        <div class="busca-linha">
+            <input id="placaBusca" type="text" value="" onkeydown="if (event.key === 'Enter') buscarRevisao()">
+            <button onclick="buscarRevisao()">Buscar</button>
+        </div>
+    </div>
+
+    <div id="resultado"></div>
+
+    <button class="btn-voltar" onclick="window.location.href='MenuRevisao.html'">&lt;&lt; Voltar</button>
+</body>
+</html>
