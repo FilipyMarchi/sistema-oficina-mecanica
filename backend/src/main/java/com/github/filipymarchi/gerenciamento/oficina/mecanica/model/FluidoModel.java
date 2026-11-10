@@ -30,6 +30,9 @@ public class FluidoModel {
     @Column(nullable = false)
     private LocalDate validade;
 
+    @Column(nullable = false)
+    private int quantidade;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fornecedor_id", nullable = false)
     private FornecedorModel fornecedor;
