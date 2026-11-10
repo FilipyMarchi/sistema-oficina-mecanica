@@ -28,7 +28,7 @@ public class PecaModel {
     private double valor;
 
     @Column(nullable = false)
-    private int quatidade;
+    private int quantidade;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fornecedor_id", nullable = false)
