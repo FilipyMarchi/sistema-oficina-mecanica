@@ -11,13 +11,11 @@ public class RevisaoDto {
     @NonNull
     private String veiculoPlaca;
 
-    @NonNull
     private String mecanicoNome;
 
     @NonNull
     private Integer kmAtual;
 
-    @NonNull
     private Integer proxRevisaoKm;
 
     @NonNull

@@ -89,19 +89,19 @@ public class RevisaoService {
         if (dto.getKmAtual() == null) {
             throw new IllegalArgumentException("Digite a quilometragem atual!");
         }
+
         if (dto.getKmAtual() < 0) {
             throw new IllegalArgumentException("A quilometragem atual não pode ser negativa!");
         }
 
-        if (dto.getProxRevisaoKm() == null) {
-            throw new IllegalArgumentException("Digite a quilometragem da próxima revisão!");
-        }
         if (dto.getProxRevisaoKm() <= dto.getKmAtual()) {
             throw new IllegalArgumentException("A próxima revisão deve ser em uma quilometragem maior que a atual!");
         }
+
         if (dto.getDataHora() == null) {
             throw new IllegalArgumentException("Informe a data e hora da revisão!");
         }
+
         if (dto.getStatus() == null) {
             throw new IllegalArgumentException("Informe o status da revisão!");
         }

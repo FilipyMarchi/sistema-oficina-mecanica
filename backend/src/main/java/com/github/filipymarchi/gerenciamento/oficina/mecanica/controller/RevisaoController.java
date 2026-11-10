@@ -3,13 +3,13 @@ package com.github.filipymarchi.gerenciamento.oficina.mecanica.controller;
 import com.github.filipymarchi.gerenciamento.oficina.mecanica.dto.RevisaoDto;
 import com.github.filipymarchi.gerenciamento.oficina.mecanica.model.RevisaoModel;
 import com.github.filipymarchi.gerenciamento.oficina.mecanica.service.RevisaoService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/oficina/revisao")
 @RequiredArgsConstructor

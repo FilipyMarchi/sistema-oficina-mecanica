@@ -27,13 +27,13 @@ public class RevisaoModel {
     private VeiculoModel veiculo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mecanico_id", nullable = false)
+    @JoinColumn(name = "mecanico_id")
     private MecanicoModel mecanico;
 
     @Column(nullable = false)
     private Integer kmAtual;
 
-    @Column(nullable = false)
+    @Column
     private Integer proxRevisaoKm;
 
     @Column(nullable = false)
