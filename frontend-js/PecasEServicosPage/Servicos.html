@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Serviços</title>
+    <link rel="stylesheet" href="estilo.css">
+    <script type="text/javascript" src="pecas-servicos.js"></script>
+</head>
+<body class="lista" onload="iniciarTela('servico')">
+    <h2 id="tituloPagina">Serviços</h2>
+
+    <button id="btnNovo" onclick="abrirFormulario()">+ Novo</button>
+
+    <div id="painelForm" class="formulario oculto">
+        <h3 id="formTitulo"></h3>
+        <div id="camposForm"></div>
+        <div class="form-acoes">
+            <button id="btnSalvar" onclick="salvar()">Cadastrar</button>
+            <button class="btn-voltar" onclick="fecharFormulario()">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="divPrincipal">Carregando...</div>
+
+    <button class="btn-voltar" onclick="window.location.href='MenuPecasServicos.html'">&lt;&lt; Voltar</button>
+</body>
+</html>
