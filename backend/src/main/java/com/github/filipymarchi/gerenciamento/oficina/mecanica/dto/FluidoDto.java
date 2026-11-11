@@ -18,6 +18,9 @@ public class FluidoDto {
     private String marca;
 
     @NonNull
+    private double valor;
+
+    @NonNull
     private String tipo;
 
     @NonNull

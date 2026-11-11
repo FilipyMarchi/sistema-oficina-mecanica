@@ -25,6 +25,9 @@ public class FluidoModel {
     private String marca;
 
     @Column(nullable = false)
+    private double valor;
+
+    @Column(nullable = false)
     private String tipo;
 
     @Column(nullable = false)

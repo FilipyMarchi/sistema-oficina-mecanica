@@ -37,6 +37,7 @@ public class FluidoService {
 
         fluidoRepository.save(FluidoModel.builder()
                 .marca(fluidoDto.getMarca())
+                .valor(fluidoDto.getValor())
                 .tipo(fluidoDto.getTipo())
                 .validade(fluidoDto.getValidade())
                 .quantidade(fluidoDto.getQuantidade())
@@ -56,6 +57,7 @@ public class FluidoService {
                 .orElseThrow(() -> new RuntimeException("Fornecedor não encontrado"));
 
         fluido.setMarca(fluidoDto.getMarca());
+        fluido.setValor(fluidoDto.getValor());
         fluido.setTipo(fluidoDto.getTipo());
         fluido.setValidade(fluidoDto.getValidade());
         fluido.setQuantidade(fluidoDto.getQuantidade());
@@ -71,6 +73,10 @@ public class FluidoService {
 
         if (dto.getMarca() == null || dto.getMarca().isBlank()) {
             throw new IllegalArgumentException("Informe a marca do fluido!");
+        }
+
+        if (dto.getValor() < 0) {
+            throw new IllegalArgumentException("O valor do fluido não pode ser negativo!");
         }
 
         if (dto.getTipo() == null || dto.getTipo().isBlank()) {
