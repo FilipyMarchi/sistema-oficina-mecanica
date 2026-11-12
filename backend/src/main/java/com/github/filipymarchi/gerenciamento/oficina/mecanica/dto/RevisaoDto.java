@@ -16,8 +16,6 @@ public class RevisaoDto {
     @NonNull
     private Integer kmAtual;
 
-    private Integer proxRevisaoKm;
-
     @NonNull
     private LocalDate dataHora;
 

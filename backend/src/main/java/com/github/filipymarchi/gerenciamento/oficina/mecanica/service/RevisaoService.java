@@ -46,7 +46,7 @@ public class RevisaoService {
                         .veiculo(veiculo)
                         .mecanico(mecanico)
                         .kmAtual(revisaoDto.getKmAtual())
-                        .proxRevisaoKm(revisaoDto.getProxRevisaoKm())
+                        .proxRevisaoKm(revisaoDto.getKmAtual() + 5000)
                         .dataHora(revisaoDto.getDataHora())
                         .status(revisaoDto.getStatus())
                 .build());
@@ -62,7 +62,7 @@ public class RevisaoService {
 
         revisao.setMecanico(mecanico);
         revisao.setKmAtual(revisaoDto.getKmAtual());
-        revisao.setProxRevisaoKm(revisaoDto.getProxRevisaoKm());
+        revisao.setProxRevisaoKm(revisaoDto.getKmAtual() + 5000);
         revisao.setDataHora(revisaoDto.getDataHora());
         revisao.setStatus(revisaoDto.getStatus());
 
@@ -92,10 +92,6 @@ public class RevisaoService {
 
         if (dto.getKmAtual() < 0) {
             throw new IllegalArgumentException("A quilometragem atual não pode ser negativa!");
-        }
-
-        if (dto.getProxRevisaoKm() <= dto.getKmAtual()) {
-            throw new IllegalArgumentException("A próxima revisão deve ser em uma quilometragem maior que a atual!");
         }
 
         if (dto.getDataHora() == null) {
