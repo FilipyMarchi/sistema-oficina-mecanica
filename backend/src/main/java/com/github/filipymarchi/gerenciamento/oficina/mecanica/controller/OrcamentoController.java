@@ -28,8 +28,8 @@ public class OrcamentoController {
     }
 
     @GetMapping("/revisao/{revisaoId}")
-    public OrcamentoModel findByRevisaoId(@PathVariable Integer id) {
-        return orcamentoService.findByRevisaoId(id);
+    public OrcamentoModel findByRevisaoId(@PathVariable Integer revisaoId) {
+        return orcamentoService.findByRevisaoId(revisaoId);
     }
 
     @PostMapping
